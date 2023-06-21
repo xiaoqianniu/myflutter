@@ -4,6 +4,7 @@ import 'package:myflutter/AboutUs.dart';
 import 'package:myflutter/ContactUs.dart';
 import 'package:myflutter/basic.dart';
 import 'package:myflutter/firebase_options.dart';
+import 'package:myflutter/model/TempRepository.dart';
 import 'package:myflutter/model/UserRepository.dart';
 
 import 'NavBar.dart';
@@ -12,8 +13,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  readData();
-  writeData();
+  // readData();
+  // writeData();
   runApp(const MyApp());
 }
 
@@ -135,17 +136,15 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextButton(onPressed: (){
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const MyHomePage(title: "Home")),
-              );
+             TempRepository().readData();
+
             },
-                child: const Text("Home")),
+                child: const Text("Read data")),
             TextButton(onPressed: (){
-              Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ContactUs()),
-              );
+              TempRepository().writeData();
+
             },
-            child: const Text("contact")),
+            child: const Text("Get data")),
 
             TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutUs()),
