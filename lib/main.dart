@@ -1,11 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:myflutter/AboutUs.dart';
 import 'package:myflutter/ContactUs.dart';
 import 'package:myflutter/basic.dart';
+import 'package:myflutter/firebase_options.dart';
+import 'package:myflutter/model/UserRepository.dart';
 
 import 'NavBar.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  readData();
+  writeData();
   runApp(const MyApp());
 }
 
