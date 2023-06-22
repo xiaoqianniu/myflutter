@@ -1,33 +1,44 @@
 
 class User{
-  final String id;
   final String username;
-  final String first;
-  final String last;
-  final String image;
+  final String email;
+  final String password;
+  final String confirmPassword;
+  final String? image;
 
 
 User(
 {
-  required this.id,
 required this.username,
-required this.first,
-required this.last,
-required this.image
+required this.email,
+required this.password,
+  required this.confirmPassword,
+ this.image
 }
 );
+
+  /* Named constructor to return a user object representing "no user"
+       to avoid dealing with nulls (e.g., when a user is not found)
+   */
+  User.noUser(): username="", email="", password="", confirmPassword="", image="";
+
+  bool isNoUser() {
+    return email == "";
+  }
+
+/// named constructor
   User.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        username = json['username'],
-        first = json['first'],
-        last = json['last'],
+      :username = json['username'],
+        email = json['email'],
+        password = json['password'],
+  confirmPassword=json['confirmPassword'],
         image = json['image'];
 
   Map<String, dynamic> toJson() => {
-    'id': id,
     'username': username,
-    'first': first,
-    'last': last,
+    'email': email,
+    'password': password,
+    'confirmPassword':confirmPassword,
     'image': image
   };
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'BottomBar.dart';
 import 'NavBar.dart';
 
 class MainLayout extends StatelessWidget {
@@ -11,20 +10,13 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-        const NavBar(),
+         NavBar(),
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.blue,
 
       body: Center(
-          child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20),
+          child: child
 
-              child ?? Container(),
-              const SizedBox(height: 20),
-              // const BottomBar(),
-            ],
-          ),
       ),
     );
   }

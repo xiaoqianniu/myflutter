@@ -2,13 +2,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:myflutter/AboutUs.dart';
 import 'package:myflutter/ContactUs.dart';
-import 'package:myflutter/basic.dart';
+import 'package:myflutter/RegisterPage.dart';
 import 'package:myflutter/firebase_options.dart';
 import 'package:myflutter/model/TempRepository.dart';
 import 'package:myflutter/model/UserRepository.dart';
 import 'package:provider/provider.dart';
 
 import 'NavBar.dart';
+import 'UserPage.dart';
 
 void main() async {
   await Firebase.initializeApp(
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
         'Home':(BuildContext context) => const MyHomePage(title:"xiaowei"),
         'ContactUs': (BuildContext context) => const ContactUs(),
         'AboutUs': (BuildContext context) => const AboutUs(),
-
+        'RegisterPage':(BuildContext context) => const RegisterPage(),
+        'UserPage':(BuildContext context) => const UserPage(),
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page____xiaowei'),
     )
@@ -85,6 +87,16 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            TextButton(onPressed: (){
+              Navigator.pushNamed(context, 'RegisterPage');
+            },
+                child: const Text("Register")),
+
+            TextButton(onPressed: (){
+              Navigator.pushNamed(context, 'UserPage');
+            },
+                child: const Text("Display")),
+
             TextButton(onPressed: (){
              TempRepository().readData();
 

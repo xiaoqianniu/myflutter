@@ -11,21 +11,10 @@ class ContactUs extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainLayout(
       title:'ContactUs',
-      child: Scaffold(
-        appBar: const NavBar(),
-        body: Center(
-          child: ElevatedButton(
-            child: const Text('Home'),
-            onPressed: () {
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const MyHomePage(title: "Home")),
-              );
-            },
-          ),
-        ),
+      child:
+        Text("Do not contact me! I am occupied!!!!"),
 
-      ),
-    );
+          );
   }
 }
 
