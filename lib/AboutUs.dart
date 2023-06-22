@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myflutter/ContactUs.dart';
 
 import 'BottomBar.dart';
+import 'MainLayout.dart';
 import 'NavBar.dart';
 
 class AboutUs extends StatelessWidget {
@@ -9,22 +10,22 @@ class AboutUs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const NavBar(),
-
-      body: Center(
-        child:
-          ElevatedButton(
-          child: const Text('ContactUs'),
-          onPressed: () {
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ContactUs()),
-            );
-          },
-        ),
-
-      ),
-        // bottomNavigationBar: const BottomBar()
-    );
+    return MainLayout(
+        title: "About us",
+        child: Scaffold(
+            appBar: AppBar(
+              title: const Text('About us'),
+            ),
+            body: Center(
+              child: ElevatedButton(
+                child: const Text('Contact us'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ContactUs()),
+                  );
+                },
+              ),
+            )));
   }
 }
