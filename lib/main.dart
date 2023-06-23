@@ -10,13 +10,12 @@ import 'package:provider/provider.dart';
 
 import 'NavBar.dart';
 import 'UserPage.dart';
+import 'UsersPage.dart';
 
 void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // readData();
-  // writeData();
   runApp(const MyApp());
 }
 
@@ -43,6 +42,7 @@ class MyApp extends StatelessWidget {
         'AboutUs': (BuildContext context) => const AboutUs(),
         'RegisterPage':(BuildContext context) => const RegisterPage(),
         'UserPage':(BuildContext context) => const UserPage(),
+        "Users":(BuildContext context) => const UsersPage(),
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page____xiaowei'),
     )
@@ -95,28 +95,32 @@ class _MyHomePageState extends State<MyHomePage> {
             TextButton(onPressed: (){
               Navigator.pushNamed(context, 'UserPage');
             },
-                child: const Text("Display")),
-
+                child: const Text("User")),
             TextButton(onPressed: (){
-             TempRepository().readData();
+              Navigator.pushNamed(context, 'Users');
 
             },
-                child: const Text("Read data")),
-            TextButton(onPressed: (){
-              TempRepository().writeData();
+                child: const Text("Users")),
+            // TextButton(onPressed: (){
+            //  TempRepository().readData();
+            //
+            // },
+            //     child: const Text("Read data")),
+            // TextButton(onPressed: (){
+            //   TempRepository().writeData();
+            //
+            // },
+            // child: const Text("Get data")),
 
-            },
-            child: const Text("Get data")),
+            // TextButton(onPressed: (){
+            //   Provider.of<UserRepository>(context, listen:false).writeData();
+            // },
+            //     child: const Text("Add data")),
 
-            TextButton(onPressed: (){
-              Provider.of<UserRepository>(context, listen:false).writeData();
-            },
-                child: const Text("Add data")),
-
-            TextButton(onPressed: (){
-              Provider.of<UserRepository>(context, listen:false).deleteData();
-            },
-                child: const Text("delete data")),
+            // TextButton(onPressed: (){
+            //   Provider.of<UserRepository>(context, listen:false).deleteData();
+            // },
+            //     child: const Text("delete data")),
 
             const Text(
               'You have pushed the button this many times:',

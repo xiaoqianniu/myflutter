@@ -14,10 +14,11 @@ class UserRepository extends ChangeNotifier{
     var results = await db.collection("users").get();
     List<User> users = [];
     for (var doc in results.docs) {
+      print(doc.data());
       var user = User.fromJson(doc.data());
       users.add(user);
     }
-
+    notifyListeners();
     return users;
   }
   Future<User> getFixedUser() {
@@ -82,9 +83,27 @@ class UserRepository extends ChangeNotifier{
         .delete();
     notifyListeners();
 
-
+  }
+  void deleteFixedUser() {
+    deleteUser(username: "alove");
   }
 
+  /// Delete the user that matches the given username
+  void deleteUser({required String username}) async {
+    var user = await db.collection("users").doc(username);
+    var doc = await user.get();
+    if (doc.data() == null) {
+      print("Unable to delete user $username - not found");
+    } else {
+      try {
+        await user.delete();
+        print("user $username successfully deleted");
+        notifyListeners();
+      } catch (e) {
+        print("Error deleting user $username: $e");
+      }
+    }
+  }
 
 }
 
