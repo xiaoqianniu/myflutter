@@ -5,12 +5,14 @@ import 'package:myflutter/ContactUs.dart';
 import 'package:myflutter/RegisterPage.dart';
 import 'package:myflutter/firebase_options.dart';
 import 'package:myflutter/model/TempRepository.dart';
-import 'package:myflutter/model/UserRepository.dart';
+import 'package:myflutter/model/ProfileRepository.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'NavBar.dart';
 import 'UserPage.dart';
 import 'UsersPage.dart';
+import 'model/AuthRepository.dart';
 
 void main() async {
   await Firebase.initializeApp(
@@ -25,10 +27,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    AuthRepository authRepository = AuthRepository();
     return
       MultiProvider(
         providers: [
-        ChangeNotifierProvider(create: (context) => UserRepository()),
+        // ChangeNotifierProvider(create: (context) => ProfileRepository()),
+          Provider<AuthRepository>(
+            create: (_) => authRepository,
+          ),
+          StreamProvider(
+            create: (context) => context.read<AuthRepository>().authState, initialData: null,
+          ),
+          ChangeNotifierProvider(create: (context) => ProfileRepository(authRepository)),
     ],
     child: MaterialApp(
       title: 'Flutter Demo',

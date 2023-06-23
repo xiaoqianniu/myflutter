@@ -4,7 +4,7 @@ import 'package:myflutter/MainLayout.dart';
 import 'package:provider/provider.dart';
 
 import 'UserGrid.dart';
-import 'model/UserRepository.dart';
+import 'model/ProfileRepository.dart';
 class UsersPage extends StatelessWidget {
   const UsersPage({super.key});
 
@@ -26,7 +26,7 @@ class UsersPage extends StatelessWidget {
               child: const Text("Get user")),
           TextButton(
               onPressed: () {
-                Provider.of<UserRepository>(context, listen: false)
+                Provider.of<ProfileRepository>(context, listen: false)
                     .deleteFixedUser();
               },
               child: const Text("Delete user")),

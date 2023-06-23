@@ -1,5 +1,5 @@
 
-class User{
+class Profile{
   final String username;
   final String email;
   final String password;
@@ -7,7 +7,7 @@ class User{
   final String? image;
 
 
-User(
+Profile(
 {
 required this.username,
 required this.email,
@@ -20,14 +20,14 @@ required this.password,
   /* Named constructor to return a user object representing "no user"
        to avoid dealing with nulls (e.g., when a user is not found)
    */
-  User.noUser(): username="", email="", password="", confirmPassword="", image="";
+  Profile.noUser(): username="", email="", password="", confirmPassword="", image="";
 
   bool isNoUser() {
     return email == "";
   }
 
 /// named constructor
-  User.fromJson(Map<String, dynamic> json)
+  Profile.fromJson(Map<String, dynamic> json)
       :username = json['username'],
         email = json['email'],
         password = json['password'],

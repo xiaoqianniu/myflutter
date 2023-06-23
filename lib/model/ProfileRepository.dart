@@ -1,38 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-import 'User.dart';
+import 'AuthRepository.dart';
+import 'Profile.dart';
 
-class UserRepository extends ChangeNotifier{
+class ProfileRepository extends ChangeNotifier{
   var db;
+  AuthRepository authRepository;
 
-  UserRepository() {
+  ProfileRepository(this.authRepository) {
     db = FirebaseFirestore.instance;
   }
 
-  Future<List<User>> getAllUsers() async {
+  Future<List<Profile>> getAllUsers() async {
     var results = await db.collection("users").get();
-    List<User> users = [];
+    List<Profile> users = [];
     for (var doc in results.docs) {
       print(doc.data());
-      var user = User.fromJson(doc.data());
+      var user = Profile.fromJson(doc.data());
       users.add(user);
     }
     notifyListeners();
     return users;
   }
-  Future<User> getFixedUser() {
+  Future<Profile> getFixedUser() {
     return getUser(username:"girl");
   }
   /// Get the user with the given username (which will be unique)
-  Future<User> getUser({required String username}) async {
+  Future<Profile> getUser({required String username}) async {
     var existing = await db.collection("users").doc(username).get();
     var data = await existing.data();
     if (data == null) {
       print("User $username not found");
-      return User.noUser();
+      return Profile.noUser();
     } else {
-      var user = User.fromJson(data);
+      var user = Profile.fromJson(data);
       return user;
     }
   }
@@ -45,16 +47,22 @@ class UserRepository extends ChangeNotifier{
     // First check to see if the username already exists
     var existing = await db.collection("users").doc(username).get();
     if (existing.data() == null) {
-      final user = User(username: username,
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword,
-          image: image);
+      String result = await authRepository.signUp(email: email, password: password);
+      if(result == "Success") {
+        final user = Profile(username: username,
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword,
+            image: image);
 
-      // Add a new document with the given username
-      db.collection("users").doc(username).set(user.toJson());
-      notifyListeners();
-      print("New user $username added");
+        String enteredPassword = "junk";
+        // Add a new document with the given username
+        db.collection("users").doc(username).set(user.toJson());
+        notifyListeners();
+        print("New user $username added");
+      }else{
+        print("Failed to create user on authentication server: " + result);
+      }
     } else {
       print("Duplicate user $username - not added");
     }
@@ -63,7 +71,7 @@ class UserRepository extends ChangeNotifier{
 
   void writeData() {
     // Create a new user with a first and last name
-    final user = User(
+    final user = Profile(
         username: "alove",
         email: 'Ada',
         password: 'Lovelace',

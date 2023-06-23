@@ -3,7 +3,7 @@ import 'package:myflutter/MainLayout.dart';
 import 'package:provider/provider.dart';
 
 import 'UserPage.dart';
-import 'model/UserRepository.dart';
+import 'model/ProfileRepository.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -86,9 +86,10 @@ class _RegisterPageState extends State<RegisterPage> {
               ElevatedButton(
                 child: const Text('NEXT'),
                 onPressed: () {
-                  Provider.of<UserRepository>(context, listen: false)
-                      .addUser(username:_usernameController.text, email:_emailController.text, password: _passwordController.text, confirmPassword:_confirmPasswordController.text,
-                      image:_imageUrlController.text);
+                  Provider.of<ProfileRepository>(context, listen: false)
+                      .addUser(username:_usernameController.text, email:_emailController.text, password: _passwordController.text.trim(), confirmPassword:_confirmPasswordController.text,
+                      image:_imageUrlController.text
+                  );
                   Navigator.pop(context);
                 },
               ),
