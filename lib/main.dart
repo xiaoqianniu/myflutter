@@ -48,11 +48,12 @@ class MyApp extends StatelessWidget {
       ),
       routes:{
         'Home':(BuildContext context) => const MyHomePage(title:"xiaowei"),
+        "Users":(BuildContext context) => const UsersPage(),
+        'UserPage':(BuildContext context) => const UserPage(),
         'ContactUs': (BuildContext context) => const ContactUs(),
         'AboutUs': (BuildContext context) => const AboutUs(),
         'RegisterPage':(BuildContext context) => const RegisterPage(),
-        'UserPage':(BuildContext context) => const UserPage(),
-        "Users":(BuildContext context) => const UsersPage(),
+
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page____xiaowei'),
     )
@@ -82,6 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User?>();
+    const String fixedUsername = "kid";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -97,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            firebaseUser != null ? Text("Logged in") : Text("Not logged in"),
             TextButton(onPressed: (){
               Navigator.pushNamed(context, 'RegisterPage');
             },
@@ -111,6 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
             },
                 child: const Text("Users")),
+            TextButton(
+                onPressed: () {
+                  context.read<AuthRepository>().signOut(
+                  );},
+                child: const Text("Log Out")),
             // TextButton(onPressed: (){
             //  TempRepository().readData();
             //
