@@ -10,7 +10,7 @@ class AboutUs extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainLayout(
         title: "About us",
-        child: Text("we are MAP07")
+        child: Text("we are MAP07, we are awsome")
     );
   }
 }
